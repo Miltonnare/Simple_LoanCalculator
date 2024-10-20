@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOAN CALCULATOR APP</title>
+    <link rel="stylesheet" href="Laon.css">
+</head>
+<body>
+    <div class="container">
+        <h1>My Loan Calculator App</h1>
+        <form action="" id="Inputter">
+            <label for="Amount" id="Amountee">KSH</label>
+            <input type="text" placeholder="Loan Amount" id="Loaner"><br><br>
+            <label for="" id="Amountee">%</label>
+            <input type="text" placeholder="Intrest RATE" id="Rate"><br><br>
+            <input type="text" name="" id="Dad" placeholder="Years To Repay" required><br><br>
+            <button type="submit" id="calculate">CALCULATE</button>
+        </form>
+        <div id="Results" class="Results">
+            <h2>Results</h2>
+            <div id="monthly-payment"></div>
+            <div id="total-payment"></div>
+            <div id="total-interest"></div>
+        </div>
+    </div>
+
+        </div>
+
+
+    </div>
+    <script>
+        document.getElementById("Inputter").addEventListener('submit',function(e){
+            e.preventDefault();
+            clear();
+            calculateLoan();
+        });
+function clear(){
+    document.getElementById('monthly-payment').textContent ="";
+    document.getElementById('total-payment').textContent ="";
+    document.getElementById('total-interest').textContent = "";
+}
+
+       
+function calculateLoan() {
+    const loanAmount = parseFloat(document.getElementById('Loaner').value);
+    const interestRate = parseFloat(document.getElementById('Rate').value);
+    const years = parseFloat(document.getElementById('Dad').value);
+    if(isNaN(loanAmount)||isNaN(interestRate)||isNaN(years))
+    {
+        alert('Enter Valid Numbers');
+        return;
+    }
+    const monthlyInterestRate = interestRate / 100 / 12;
+    
+    const totalPayments = years * 12;
+
+    
+    const x = Math.pow(1 + monthlyInterestRate, totalPayments);
+    const monthlyPayment = (loanAmount * x * monthlyInterestRate) / (x - 1);
+
+    if (isFinite(monthlyPayment)) {
+        document.getElementById('monthly-payment').textContent = `Monthly Payment:KSH. ${monthlyPayment.toFixed(2)}`;
+        document.getElementById('total-payment').textContent = `Total Payment:KSH. ${(monthlyPayment * totalPayments).toFixed(2)}`;
+        document.getElementById('total-interest').textContent = `Total Interest:KSH. ${((monthlyPayment * totalPayments) - loanAmount).toFixed(2)}`;
+        
+    } else {
+        alert('Please check your input values');
+    }
+}
+        
+
+    </script>
+    
+</body>
+</html>
